@@ -62,12 +62,12 @@ func (h *hub) run() {
                         delete(h.usernames, c)
 			close(c.send)
 		case mc := <-h.recive:
-                        h.usernames[c] = mc.Message.F //sets the senders transmitted username as current username
+                        h.usernames[mc.Conn] = mc.Message.F //sets the senders transmitted username as current username
                         // if the message was '/who', then the sender gets a list of currently online usernames
-                        if mc.Message.M = '/who' {
-                           c.send <- &message {
-                             F := "System",
-                             M := "Dies ist eine Userliste... NOT", //todo
+                        if mc.Message.M == "/who" {
+                           mc.Conn.send <- &message {
+                             F: "System",
+                             M: "Dies ist eine Userliste... NOT", //todo
                            }
                         } else {
 			    for c := range h.connections {
@@ -129,7 +129,6 @@ func mainServer(w http.ResponseWriter, r *http.Request) {
 func webSocketHandler(ws *websocket.Conn) {
 	c := &connection{
 		send: make(chan *message, 256),
-                F = "",
 		ws:   ws,
 	}
 	h.register <- c
