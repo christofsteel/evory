@@ -67,7 +67,9 @@ func (h *hub) run() {
                         if mc.Message.M == "/who" {
                            usernames := ""
                            for _,username := range h.usernames {
-                             usernames = usernames + ", " + username
+                             if username == "" {
+                                 usernames = username + " " + usernames
+                            }
                            }
                            mc.Conn.send <- &message {
                              F: "System",
