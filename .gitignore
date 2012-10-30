@@ -12,6 +12,7 @@
 *.o
 *.a
 *.so
+server
 
 # Folders
 _obj
