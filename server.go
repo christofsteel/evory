@@ -67,7 +67,7 @@ func (h *hub) run() {
                         if mc.Message.M == "/who" {
                            usernames := ""
                            for _,username := range h.usernames {
-                             if username == "" {
+                             if username != "" {
                                  usernames = username + " " + usernames
                             }
                            }
