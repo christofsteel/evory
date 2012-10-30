@@ -1,5 +1,8 @@
+library chat;
+
 import 'dart:html';
 import 'dart:json';
+part 'config.dart';
 
 ChatConnection  chatConnection;
 MessageInput    messageInput;
@@ -143,5 +146,5 @@ main() {
   chatWindow = new ChatWindow(chatElem);
   usernameInput = new UsernameInput(usernameElem);
   messageInput = new MessageInput(messageElem);
-  chatConnection = new ChatConnection("ws://129.217.12.180:8080/ws");
+  chatConnection = new ChatConnection(websocketuri);
 }
