@@ -10,7 +10,7 @@ import (
 	"net/http"
 )
 
-var port *int = flag.Int("p", 8081, "Port to listen.")
+var port *int = flag.Int("p", 8080, "Port to listen.")
 
 func main() {
 	flag.Parse()
@@ -65,9 +65,13 @@ func (h *hub) run() {
                         h.usernames[mc.Conn] = mc.Message.F //sets the senders transmitted username as current username
                         // if the message was '/who', then the sender gets a list of currently online usernames
                         if mc.Message.M == "/who" {
+                           usernames := ""
+                           for _,username := range h.usernames {
+                             usernames = usernames + ", " + username
+                           }
                            mc.Conn.send <- &message {
                              F: "System",
-                             M: "Dies ist eine Userliste... NOT", //todo
+                             M: usernames,
                            }
                         } else {
 			    for c := range h.connections {
