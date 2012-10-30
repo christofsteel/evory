@@ -10,7 +10,7 @@ import (
 	"net/http"
 )
 
-var port *int = flag.Int("p", 8080, "Port to listen.")
+var port *int = flag.Int("p", 8081, "Port to listen.")
 
 func main() {
 	flag.Parse()
@@ -37,6 +37,7 @@ type hub struct {
 	//Set of Connections.
 	//map is a helping type for realisation
 	connections map[*connection]bool
+        usernames   map[*connection]string
 	register    chan *connection
 	unregister  chan *connection
 	recive      chan *messageConnection
@@ -44,6 +45,7 @@ type hub struct {
 
 var h = hub{
 	connections: make(map[*connection]bool),
+        usernames:   make(map[*connection]string),
 	register:    make(chan *connection),
 	unregister:  make(chan *connection),
 	recive:      make(chan *messageConnection),
@@ -54,21 +56,32 @@ func (h *hub) run() {
 		select {
 		case c := <-h.register:
 			h.connections[c] = true
+                        h.usernames[c] = ""
 		case c := <-h.unregister:
 			delete(h.connections, c)
+                        delete(h.usernames, c)
 			close(c.send)
 		case mc := <-h.recive:
-			for c := range h.connections {
-				if c != mc.Conn {
-					select {
-					case c.send <- &mc.Message: //todo
+                        h.usernames[c] = mc.Message.F //sets the senders transmitted username as current username
+                        // if the message was '/who', then the sender gets a list of currently online usernames
+                        if mc.Message.M = '/who' {
+                           c.send <- &message {
+                             F := "System",
+                             M := "Dies ist eine Userliste... NOT", //todo
+                           }
+                        } else {
+			    for c := range h.connections {
+				    if c != mc.Conn {
+					    select {
+					    case c.send <- &mc.Message: //todo
 
-					default:
-						delete(h.connections, c)
-						close(c.send)
-						go c.ws.Close()
-					}
-				}
+					    default:
+						    delete(h.connections, c)
+						    close(c.send)
+						    go c.ws.Close()
+					    }
+				    }
+                              }
 			}
 		}
 	}
@@ -116,6 +129,7 @@ func mainServer(w http.ResponseWriter, r *http.Request) {
 func webSocketHandler(ws *websocket.Conn) {
 	c := &connection{
 		send: make(chan *message, 256),
+                F = "",
 		ws:   ws,
 	}
 	h.register <- c
