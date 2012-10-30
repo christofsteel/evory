@@ -146,9 +146,5 @@ main() {
   chatWindow = new ChatWindow(chatElem);
   usernameInput = new UsernameInput(usernameElem);
   messageInput = new MessageInput(messageElem);
-<<<<<<< HEAD
   chatConnection = new ChatConnection(websocketuri);
-=======
-  chatConnection = new ChatConnection("ws://129.217.12.181:8080/ws");
->>>>>>> 6e7fb22f3b63d3f548a22eca410c4a5f9b008595
 }
