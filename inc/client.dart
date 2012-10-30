@@ -118,29 +118,30 @@ class UsernameInput extends View<InputElement> {
   String get username => elem.value;
 }
 
-class ChatWindow extends View<TextAreaElement> {
-  ChatWindow(TextAreaElement elem) : super(elem);
+class ChatWindow extends View<Element> {
+  ChatWindow(Element elem) : super(elem);
 
   displayMessage(String msg, String from) {
-    _display("$from: $msg\n");
+    _display("$from: $msg");
   }
 
   displayNotice(String notice) {
-    _display("[system]: $notice\n");
+    _display("[system]: $notice");
   }
 
   _display(String str) {
-    elem.text = "${elem.text}$str";
+    elem.addHTML("<span>${str}</span><br/>");
+//    elem.text = "${elem.text}$str";
     //scroll down
     //does not work in firefox -.-
     //count lines
-    int lines = elem.text.split("\n").length;
-    elem.scrollByLines(lines);
+//    int lines = elem.text.split("\n").length;
+//    elem.scrollByLines(lines);
   }
 }
 
 main() {
-  TextAreaElement chatElem = query('#chat-display');
+  Element chatElem = query('#chat-display');
   InputElement usernameElem = query('#chat-username');
   InputElement messageElem = query('#chat-message');
   chatWindow = new ChatWindow(chatElem);
