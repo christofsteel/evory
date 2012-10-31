@@ -8,7 +8,7 @@ ChatConnection  chatConnection;
 MessageInput    messageInput;
 UsernameInput   usernameInput;
 ChatWindow      chatWindow;
-Element		platzhalter;
+Element		chatBottom;
 
 class ChatConnection {
   WebSocket webSocket;
@@ -132,6 +132,7 @@ class ChatWindow extends View<Element> {
 
   _display(String usr, String msg) {
     elem.addHTML("<div class=\"messagerow\"><span class=\"username\">${usr}</span><span class=\"message\">${msg}</span></div>");
+    chatBottom.scrollIntoView();
 //    elem.addHTML("window.height");
 //    elem.text = "${elem.text}$str";
     //scroll down
@@ -144,7 +145,7 @@ class ChatWindow extends View<Element> {
 
 main() {
   Element chatElem = query('#chat-display');
-  platzhalter = query('#platzhalter');
+  chatBottom = query('#chat-bottom');
   InputElement usernameElem = query('#chat-username');
   InputElement messageElem = query('#chat-message');
   chatWindow = new ChatWindow(chatElem);

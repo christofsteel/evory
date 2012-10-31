@@ -332,7 +332,7 @@ $$.LinkedHashMapImplementation = {"": ["_lib0_list", "_map"],
   var t1 = {};
   var list = $.ListImplementation_List($.get$length(this));
   t1.index_1 = 0;
-  this._lib0_list.forEach$1(new $.LinkedHashMapImplementation_values__(list, t1));
+  this._lib0_list.forEach$1(new $.LinkedHashMapImplementation_values__(t1, list));
   return list;
 },
  forEach$1: function(f) {
@@ -987,9 +987,8 @@ $$.ChatWindow = {"": ["elem"],
   this._display$2('System', notice);
 },
  _display$2: function(usr, msg) {
-  var t1 = this.elem;
-  t1.addHTML$1('<div class="messagerow"><span class="username">' + usr + '</span><span class="message">' + msg + '</span></div>');
-  t1.addHTML$1('window.height');
+  this.elem.addHTML$1('<div class="messagerow"><span class="username">' + usr + '</span><span class="message">' + msg + '</span></div>');
+  $.chatBottom.scrollIntoView$0();
 }
 };
 
@@ -1899,7 +1898,7 @@ $$._NativeJsSendPort = {"": ["_receivePort?", "_isolateId"],
 $$._WorkerSendPort = {"": ["_workerId?", "_receivePortId", "_isolateId"],
  "super": "_BaseSendPort",
  send$2: function(message, replyTo) {
-  $._waitForPendingPorts([message, replyTo], new $._WorkerSendPort_send_anon(replyTo, message, this));
+  $._waitForPendingPorts([message, replyTo], new $._WorkerSendPort_send_anon(this, replyTo, message));
 },
  send$1: function(message) {
   return this.send$2(message,null)
@@ -2330,7 +2329,7 @@ $$._Timer = {"": ["_once", "_handle"],
   this._handle = $._window().setInterval$2(new $.anon0(this, callback), milliSeconds);
 },
  _Timer$2: function(milliSeconds, callback) {
-  this._handle = $._window().setTimeout$2(new $.anon(this, callback), milliSeconds);
+  this._handle = $._window().setTimeout$2(new $.anon(callback, this), milliSeconds);
 }
 };
 
@@ -2775,7 +2774,7 @@ $$._JsonStringifier = {"": ["sb?", "seen"],
     t2 = this.sb;
     $.add$1(t2, '{');
     t1.first_10 = true;
-    object.forEach$1(new $._JsonStringifier_stringifyJsonValue_anon(this, t1));
+    object.forEach$1(new $._JsonStringifier_stringifyJsonValue_anon(t1, this));
     $.add$1(t2, '}');
     t2 = this.seen;
     if (0 >= t2.length)
@@ -2860,7 +2859,7 @@ $$._JsonStringifier = {"": ["sb?", "seen"],
                                       t2 = this.sb;
                                       $.add$1(t2, '{');
                                       t1.first_10 = true;
-                                      object.forEach$1(new $._JsonStringifier_stringifyJsonValue_anon(this, t1));
+                                      object.forEach$1(new $._JsonStringifier_stringifyJsonValue_anon(t1, this));
                                       $.add$1(t2, '}');
                                       t2 = this.seen;
                                       if (0 >= t2.length)
@@ -3550,7 +3549,7 @@ $$.MessageInput_bind_anon = {"": ["this_0"],
 }
 };
 
-$$._JsonStringifier_stringifyJsonValue_anon = {"": ["this_2", "box_0"],
+$$._JsonStringifier_stringifyJsonValue_anon = {"": ["box_0", "this_2"],
  "super": "Closure",
  call$2: function(key, value) {
   var t1 = this.box_0;
@@ -3589,13 +3588,13 @@ $$._BaseSendPort_call_anon = {"": ["completer_1", "port_0"],
 }
 };
 
-$$._WorkerSendPort_send_anon = {"": ["replyTo_2", "message_1", "this_0"],
+$$._WorkerSendPort_send_anon = {"": ["this_2", "replyTo_1", "message_0"],
  "super": "Closure",
  call$0: function() {
-  var t1 = this.this_0;
-  var t2 = this.replyTo_2;
+  var t1 = this.this_2;
+  var t2 = this.replyTo_1;
   t1._checkReplyTo$1(t2);
-  var workerMessage = $._serializeMessage($.makeLiteralMap(['command', 'message', 'port', t1, 'msg', this.message_1, 'replyTo', t2]));
+  var workerMessage = $._serializeMessage($.makeLiteralMap(['command', 'message', 'port', t1, 'msg', this.message_0, 'replyTo', t2]));
   t2 = $._globalState().get$isWorker() === true;
   var t3 = $._globalState;
   if (t2)
@@ -3648,7 +3647,7 @@ $$._StorageImpl_values_anon = {"": ["values_0"],
 }
 };
 
-$$.LinkedHashMapImplementation_values__ = {"": ["list_2", "box_0"],
+$$.LinkedHashMapImplementation_values__ = {"": ["box_0", "list_2"],
  "super": "Closure",
  call$1: function(entry) {
   var t1 = this.list_2;
@@ -3697,16 +3696,16 @@ $$._NativeJsSendPort_send_anon = {"": ["replyTo_5", "message_4", "this_3"],
     t1.msg_1 = $._serializeMessage(t1.msg_1);
     t1.reply_2 = $._serializeMessage(t1.reply_2);
   }
-  $._globalState().get$topEventLoop().enqueue$3(isolate, new $._NativeJsSendPort_send_anon0(shouldSerialize, t2, t1), 'receive ' + $.S(msg));
+  $._globalState().get$topEventLoop().enqueue$3(isolate, new $._NativeJsSendPort_send_anon0(t2, shouldSerialize, t1), 'receive ' + $.S(msg));
 }
 };
 
-$$._NativeJsSendPort_send_anon0 = {"": ["shouldSerialize_7", "this_6", "box_0"],
+$$._NativeJsSendPort_send_anon0 = {"": ["this_7", "shouldSerialize_6", "box_0"],
  "super": "Closure",
  call$0: function() {
-  var t1 = this.this_6;
+  var t1 = this.this_7;
   if (!(t1.get$_receivePort().get$_callback() == null)) {
-    if (this.shouldSerialize_7 === true) {
+    if (this.shouldSerialize_6 === true) {
       var t2 = this.box_0;
       t2.msg_1 = $._deserializeMessage(t2.msg_1);
       t2.reply_2 = $._deserializeMessage(t2.reply_2);
@@ -3765,10 +3764,10 @@ $$._EventLoop__runHelper_next = {"": ["this_0"],
 }
 };
 
-$$.anon = {"": ["this_1", "callback_0"],
+$$.anon = {"": ["callback_1", "this_0"],
  "super": "Closure",
  call$0: function() {
-  return this.callback_0.call$1(this.this_1);
+  return this.callback_1.call$1(this.this_0);
 }
 };
 
@@ -4757,7 +4756,7 @@ $._RTCDataChannelEventsImpl$ = function(_ptr) {
 
 $.main = function() {
   var chatElem = $.query('#chat-display');
-  $.platzhalter = $.query('#platzhalter');
+  $.chatBottom = $.query('#chat-bottom');
   var usernameElem = $.query('#chat-username');
   var messageElem = $.query('#chat-message');
   $.chatWindow = $.ChatWindow$(chatElem);
@@ -5608,12 +5607,12 @@ $._JsonStringifier_escape = function(sb, s) {
   $.add$1(sb, needsEscape ? $.StringImplementation_String$fromCharCodes(charCodes) : s);
 };
 
-$.JsonUnsupportedObjectError$withCause = function(unsupportedObject, cause) {
-  return new $.JsonUnsupportedObjectError(unsupportedObject, cause);
-};
-
 $.JsonUnsupportedObjectError$ = function(unsupportedObject) {
   return new $.JsonUnsupportedObjectError(unsupportedObject, null);
+};
+
+$.JsonUnsupportedObjectError$withCause = function(unsupportedObject, cause) {
+  return new $.JsonUnsupportedObjectError(unsupportedObject, cause);
 };
 
 $._JsonStringifier$ = function(sb) {
@@ -5890,7 +5889,7 @@ $._getTypeNameOf = null;
 $.WebSocket_OPEN = 1;
 $.messageInput = null;
 $.chatWindow = null;
-$.platzhalter = null;
+$.chatBottom = null;
 $.chatConnection = null;
 $.websocketuri = 'ws://fiws181.cs.uni-dortmund.de:8080/ws';
 $.usernameInput = null;
@@ -6754,6 +6753,11 @@ $.$defineNativeClass('DocumentFragment', {"": [],
  get$parent: function() {
   return;
 },
+ scrollIntoView$1: function(centerIfNeeded) {
+},
+ scrollIntoView$0: function() {
+  return this.scrollIntoView$1(null)
+},
  get$on: function() {
   return $._ElementEventsImpl$(this);
 },
@@ -6873,6 +6877,12 @@ $.$defineNativeClass('Element', {"": ["id?", "innerHTML!"],
 },
  $dom_querySelector$1: function(selectors) {
   return this.querySelector(selectors);
+},
+ scrollIntoView$1: function(centerIfNeeded) {
+  return this.scrollIntoViewIfNeeded(centerIfNeeded);
+},
+ scrollIntoView$0: function() {
+  return this.scrollIntoViewIfNeeded();
 },
  is$Element: function() { return true; }
 });

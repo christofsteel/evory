@@ -29,9 +29,8 @@ body {
   padding-top: 140px;
 }
 
-.platzhalter{
+#chat-bottom{
   height: 50px;
-  background-color: yellow;
 }
 
 #canvas-content {
