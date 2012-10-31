@@ -134,12 +134,7 @@ class ChatWindow extends View<Element> {
     BRElement brElement = new BRElement();
     elem.nodes..add(msg)
               ..add(brElement);
-    brElement.scrollIntoView();           //does not work
-    
-//does also not work
-//    Element chatBottomBeacon = query('#chat-bottom-beacon');
-//    chatBottomBeacon.scrollIntoView();
-
+    msg.scrollIntoView(); // Does not work under Firefox :(
   }
 }
 
