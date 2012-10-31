@@ -122,15 +122,15 @@ class ChatWindow extends View<Element> {
   ChatWindow(Element elem) : super(elem);
 
   displayMessage(String msg, String from) {
-    _display("$from: $msg");
+    _display("$from", "$msg");
   }
 
   displayNotice(String notice) {
-    _display("[system]: $notice");
+    _display("System", "$notice");
   }
 
-  _display(String str) {
-    elem.addHTML("<span>${str}</span><br/>");
+  _display(String usr, String msg) {
+    elem.addHTML("<div class="messagerow"><span class="username">${usr}</span><span class="message">${msg}</span></div>");
 //    elem.text = "${elem.text}$str";
     //scroll down
     //does not work in firefox -.-
