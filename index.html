@@ -7,20 +7,25 @@
     <link rel="stylesheet" href="./inc/index.css">
   </head>
   <body>
-    <img src="./inc/logo.png" alt="evory"/>
+    <header>
+      <img src="./inc/logo.png" alt="evory"/>
+    </header>
 
-    <div>
-      <div id="chat-display" rows="10" disabled></div>
+    <div id="body">
+      <div id="chat-display"></div>
+      <div id="chat-bottom-beacon"></div>
     </div>
-    
-    <div>
-      <label for="chat-username">Username:</label>
-      <input id="chat-username" name="chat-username" type="text">
-    </div>
-    <div>
-      <label for="chat-message">Message:</label>
-      <input id="chat-message" name="chat-message" type="text" disabled value="enter message...">
-    </div>
+
+    <footer>
+      <div>
+        <label for="chat-username">Username:</label>
+        <input id="chat-username" name="chat-username" type="text">
+      </div>
+      <div>
+        <label for="chat-message">Message:</label>
+        <input id="chat-message" name="chat-message" type="text" disabled value="enter message...">
+      </div>
+    </footer>
 
     <script type="application/dart" src="./inc/client.dart"></script>
     <script type="text/javascript" src="./inc/dart.js"></script>

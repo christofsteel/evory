@@ -130,13 +130,16 @@ class ChatWindow extends View<Element> {
   }
 
   _display(String str) {
-    elem.addHTML("<span>${str}</span><br/>");
-//    elem.text = "${elem.text}$str";
-    //scroll down
-    //does not work in firefox -.-
-    //count lines
-//    int lines = elem.text.split("\n").length;
-//    elem.scrollByLines(lines);
+    Element msg = new Element.html("<span>${str}</span>");
+    BRElement brElement = new BRElement();
+    elem.nodes..add(msg)
+              ..add(brElement);
+    brElement.scrollIntoView();           //does not work
+    
+//does also not work
+//    Element chatBottomBeacon = query('#chat-bottom-beacon');
+//    chatBottomBeacon.scrollIntoView();
+
   }
 }
 
