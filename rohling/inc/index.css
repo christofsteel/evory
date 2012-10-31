@@ -1,0 +1,102 @@
+html {
+  height: 100%;
+}
+body {
+  height: 100%;
+  background-color: white;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 32px;
+  font-weight: normal;
+  line-height: 1.2em;
+  margin: 0px;
+}
+
+#header img {
+  height: 100px;
+}
+
+#header {
+ background-color: #003700;
+ padding: 20px;
+ height: 100px;
+ width: 100%;
+ position: fixed;
+ top: 0px;
+}
+
+#wrapper {
+  height: 100%;
+  padding-top: 140px;
+}
+
+.platzhalter{
+  height: 100px;
+}
+
+#canvas-content {
+  width: 100%;
+  height: 400px;
+  position: relative;
+  border: 1px solid #ccc;
+  background-color: #fff;
+}
+
+#summary {
+  float: left;
+}
+
+#notes {
+  float: right;
+  width: 120px;
+  text-align: right;
+}
+
+.error {
+  font-style: italic;
+  color: red;
+}
+
+div #chat-display {
+  height: 100%;
+  width: 100%;
+/*  border-top: solid black 1px;
+  overflow-x: auto;
+  border-top-left-radius: 15px;
+  border-bottom-left-radius: 15px; */
+}
+
+div #chat-display .messagerow {
+  padding: 5px;
+  border-top: dotted grey 1px;
+}
+
+.username {
+  font-weight: bold;
+}
+
+.username:after {
+  content: ':';
+}
+
+#chat-username {
+  width: 15%;
+  border: none;
+  background-color: #508050;
+}
+#chat-message {
+  width: 80%%;
+  border: none;
+  background-color: #508050;
+}
+
+#input {
+  width: 100%;
+  background-color: #003700;
+  padding: 5px;
+  position: fixed;
+  bottom: 0px;
+}
+
+#chat-username, #chat-message {
+  font-size:32px;
+}
