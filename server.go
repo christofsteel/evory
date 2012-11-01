@@ -3,7 +3,6 @@ package main
 import (
 	"code.google.com/p/go.net/websocket"
 	//	"encoding/json"
-	"container/list"
 	"flag"
 	"fmt"
 	"io/ioutil"
@@ -37,7 +36,7 @@ type messageConnection struct {
 
 func (h *hub) logger () {
 	for {
-		msg <- h.lastmessage
+		msg := <- h.lastmessage
 		fmt.Println(msg.F + ": " + msg.M)
 	}
 }
@@ -56,7 +55,7 @@ type hub struct {
 var h = hub{
 	connections: make(map[*connection]bool),
         usernames:   make(map[*connection]string),
-	lastmessages make(chan message),
+	lastmessage: make(chan message),
 	register:    make(chan *connection),
 	unregister:  make(chan *connection),
 	recive:      make(chan *messageConnection),
