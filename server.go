@@ -3,6 +3,7 @@ package main
 import (
 	"code.google.com/p/go.net/websocket"
 	//	"encoding/json"
+	"container/list"
 	"flag"
 	"fmt"
 	"io/ioutil"
@@ -15,6 +16,7 @@ var port *int = flag.Int("p", 8080, "Port to listen.")
 func main() {
 	flag.Parse()
 	go h.run()
+	go h.logger()
 	http.HandleFunc("/", mainServer)
 	http.Handle("/ws", websocket.Handler(webSocketHandler))
 	http.HandleFunc("/inc/", sourceHandler)
@@ -33,19 +35,28 @@ type messageConnection struct {
 	Conn    *connection
 }
 
+func (h *hub) logger () {
+	for {
+		msg <- h.lastmessage
+		fmt.Println(msg.F + ": " + msg.M)
+	}
+}
+
 type hub struct {
 	//Set of Connections.
 	//map is a helping type for realisation
-	connections map[*connection]bool
-        usernames   map[*connection]string
-	register    chan *connection
-	unregister  chan *connection
-	recive      chan *messageConnection
+	connections	map[*connection]bool
+        usernames	map[*connection]string
+	register	chan *connection
+	lastmessage	chan message
+	unregister	chan *connection
+	recive		chan *messageConnection
 }
 
 var h = hub{
 	connections: make(map[*connection]bool),
         usernames:   make(map[*connection]string),
+	lastmessages make(chan message),
 	register:    make(chan *connection),
 	unregister:  make(chan *connection),
 	recive:      make(chan *messageConnection),
@@ -63,6 +74,7 @@ func (h *hub) run() {
 			close(c.send)
 		case mc := <-h.recive:
                         h.usernames[mc.Conn] = mc.Message.F //sets the senders transmitted username as current username
+			h.lastmessage <- mc.Message
                         // if the message was '/who', then the sender gets a list of currently online usernames
                         if mc.Message.M == "/who" {
                            usernames := ""
