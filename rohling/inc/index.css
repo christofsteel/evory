@@ -1,33 +1,13 @@
 html {
   height: 100%;
-<<<<<<< HEAD
-  margin: 0;
-  padding: 0;
-}
-
-body {
-  height: 100%;
-  background-color: #F8F8F8;
-=======
 }
 body {
   height: 100%;
   background-color: white;
->>>>>>> 4c71443bbb5a23e6f77a4ec01f5d058ccc5bda6f
   font-family: 'Open Sans', sans-serif;
   font-size: 32px;
   font-weight: normal;
   line-height: 1.2em;
-<<<<<<< HEAD
-/*  margin: 15px; */
-  margin: 0;
-  padding: 0;
-}
-
-header {
-  height: 10%;
-  min-height: 100px;
-=======
   margin: 0px;
 }
 
@@ -49,47 +29,17 @@ header {
   padding-top: 140px;
 }
 
-#chat-bottom{
-  height: 50px;
->>>>>>> 4c71443bbb5a23e6f77a4ec01f5d058ccc5bda6f
+.platzhalter{
+  height: 100px;
 }
 
-#body {
-  width: 95%;
-  height: 75%;
-/*  margin: 1em; */
-/*  padding: 1em; */
-  border-style: solid;
-  overflow-y: scroll;
-}
-
-footer {
+#canvas-content {
   width: 100%;
-  height: 10%;
-  min-height: 110px;
-  position: fixed;
-  bottom: 0px;
+  height: 400px;
+  position: relative;
+  border: 1px solid #ccc;
+  background-color: #fff;
 }
-
-label {
-  display: block;
-  width: 20em;
-  margin-top: 5px;
-}
-
-#chat-message {
-  width: 95%;
-}
-
-
-
-
-
-
-
-
-
-
 
 #summary {
   float: left;
@@ -106,20 +56,8 @@ label {
   color: red;
 }
 
-<<<<<<< HEAD
-#canvas-content {
-  width: 100%;
-  height: 400px;
-  position: relative;
-  border: 1px solid #ccc;
-  background-color: #fff;
-}
-
-p {
-  color: #333;
-=======
-div #chat-wrapper {
-/*  height: 100%; */
+div #chat-display {
+  height: 100%;
   width: 100%;
 /*  border-top: solid black 1px;
   overflow-x: auto;
@@ -130,7 +68,6 @@ div #chat-wrapper {
 div #chat-display .messagerow {
   padding: 5px;
   border-top: dotted grey 1px;
-  background-color: #508050;
 }
 
 .username {
@@ -138,7 +75,7 @@ div #chat-display .messagerow {
 }
 
 .username:after {
-  content: ': ';
+  content: ':';
 }
 
 #chat-username {
@@ -162,5 +99,4 @@ div #chat-display .messagerow {
 
 #chat-username, #chat-message {
   font-size:32px;
->>>>>>> 4c71443bbb5a23e6f77a4ec01f5d058ccc5bda6f
 }

@@ -8,6 +8,7 @@ ChatConnection  chatConnection;
 MessageInput    messageInput;
 UsernameInput   usernameInput;
 ChatWindow      chatWindow;
+Element		chatBottom;
 
 class ChatConnection {
   WebSocket webSocket;
@@ -122,24 +123,29 @@ class ChatWindow extends View<Element> {
   ChatWindow(Element elem) : super(elem);
 
   displayMessage(String msg, String from) {
-    _display("$from: $msg");
+    _display("$from", "$msg");
   }
 
   displayNotice(String notice) {
-    _display("[system]: $notice");
+    _display("System", "$notice");
   }
 
-  _display(String str) {
-    Element msg = new Element.html("<span>${str}</span>");
-    BRElement brElement = new BRElement();
-    elem.nodes..add(msg)
-              ..add(brElement);
-    msg.scrollIntoView(); // Does not work under Firefox :(
+  _display(String usr, String msg) {
+//  _display(String str) {
+//    Element msg = new Element.html("<span>${str}</span>");
+//    BRElement brElement = new BRElement();
+//    elem.nodes..add(msg)
+//              ..add(brElement);
+//    msg.scrollIntoView(); // Does not work under Firefox :(
+
+    elem.addHTML("<div class=\"messagerow\"><span class=\"username\">${usr}</span><span class=\"message\">${msg}</span></div>");
+    chatBottom.scrollIntoView();
   }
 }
 
 main() {
   Element chatElem = query('#chat-display');
+  chatBottom = query('#chat-bottom');
   InputElement usernameElem = query('#chat-username');
   InputElement messageElem = query('#chat-message');
   chatWindow = new ChatWindow(chatElem);

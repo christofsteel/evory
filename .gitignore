@@ -10,8 +10,6 @@
 *.so
 server
 
-config.dart
-
 # Folders
 _obj
 _test

@@ -13,18 +13,12 @@
 
     <div id="body">
       <div id="chat-display"></div>
-      
+      <div id="chat-bottom">&nbsp;</div>
     </div>
 
-    <footer>
-      <div>
-        <label for="chat-username">Username:</label>
-        <input id="chat-username" name="chat-username" type="text">
-      </div>
-      <div>
-        <label for="chat-message">Message:</label>
-        <input id="chat-message" name="chat-message" type="text" disabled value="enter message...">
-      </div>
+    <footer id="input"
+        <input id="chat-username" name="chat-username" type="text" placeholder="Username">
+        <input id="chat-message" name="chat-message" type="text" placeholder="Message">
     </footer>
 
     <script type="application/dart" src="./inc/client.dart"></script>
