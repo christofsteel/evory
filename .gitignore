@@ -1,3 +1,7 @@
+# Project specific
+server
+config.dart
+
 # Dart excludes
 # Dart Editor config file
 .project
@@ -8,7 +12,6 @@
 *.o
 *.a
 *.so
-server
 
 # Folders
 _obj
