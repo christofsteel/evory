@@ -14,7 +14,14 @@ var port *int = flag.Int("p", 8080, "Port to listen.")
 
 func main() {
 	flag.Parse()
+	h.lastfive <- []*message{
+			&emptymessage,
+			&emptymessage,
+			&emptymessage,
+			&emptymessage,
+			&emptymessage }
 	go h.run()
+	go h.logger()
 	http.HandleFunc("/", mainServer)
 	http.Handle("/ws", websocket.Handler(webSocketHandler))
 	http.HandleFunc("/inc/", sourceHandler)
@@ -28,24 +35,42 @@ type message struct {
 	M string
 }
 
+var emptymessage = message{
+	F: "",
+	M: "",
+}
+
 type messageConnection struct {
 	Message message
 	Conn    *connection
 }
 
+func (h *hub) logger () {
+	for {
+		msg := <- h.lastmessage
+		fmt.Println(msg.F + ": " + msg.M)
+		lastfive := <- h.lastfive
+		h.lastfive <- append(lastfive[1:5], msg)
+	}
+}
+
 type hub struct {
 	//Set of Connections.
 	//map is a helping type for realisation
-	connections map[*connection]bool
-        usernames   map[*connection]string
-	register    chan *connection
-	unregister  chan *connection
-	recive      chan *messageConnection
+	connections	map[*connection]bool
+        usernames	map[*connection]string
+	register	chan *connection
+	lastmessage	chan *message
+	lastfive	chan []*message
+	unregister	chan *connection
+	recive		chan *messageConnection
 }
 
 var h = hub{
 	connections: make(map[*connection]bool),
         usernames:   make(map[*connection]string),
+	lastmessage: make(chan *message),
+	lastfive:    make(chan []*message, 1),
 	register:    make(chan *connection),
 	unregister:  make(chan *connection),
 	recive:      make(chan *messageConnection),
@@ -57,12 +82,28 @@ func (h *hub) run() {
 		case c := <-h.register:
 			h.connections[c] = true
                         h.usernames[c] = ""
+			c.send <- &message {
+				F: "System",
+				M: "Hi, the last messages were",
+			}
+			lastfive := <- h.lastfive
+			h.lastfive <- lastfive
+			for _,msg := range lastfive {
+				if *msg != emptymessage {
+					c.send <- msg
+				}
+			}
+			c.send <- &message {
+				F: "System",
+				M: "Welcome to the Server",
+			}
 		case c := <-h.unregister:
 			delete(h.connections, c)
                         delete(h.usernames, c)
 			close(c.send)
 		case mc := <-h.recive:
                         h.usernames[mc.Conn] = mc.Message.F //sets the senders transmitted username as current username
+			h.lastmessage <- &mc.Message
                         // if the message was '/who', then the sender gets a list of currently online usernames
                         if mc.Message.M == "/who" {
                            usernames := ""
