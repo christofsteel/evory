@@ -131,15 +131,15 @@ class ChatWindow extends View<Element> {
   }
 
   _display(String usr, String msg) {
+//  _display(String str) {
+//    Element msg = new Element.html("<span>${str}</span>");
+//    BRElement brElement = new BRElement();
+//    elem.nodes..add(msg)
+//              ..add(brElement);
+//    msg.scrollIntoView(); // Does not work under Firefox :(
+
     elem.addHTML("<div class=\"messagerow\"><span class=\"username\">${usr}</span><span class=\"message\">${msg}</span></div>");
     chatBottom.scrollIntoView();
-//    elem.addHTML("window.height");
-//    elem.text = "${elem.text}$str";
-    //scroll down
-    //does not work in firefox -.-
-    //count lines
-//    int lines = elem.text.split("\n").length;
-//    elem.scrollByLines(lines);
   }
 }
 
